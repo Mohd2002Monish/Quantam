@@ -5,12 +5,12 @@ const bcrypt = require("bcrypt");
 
 app.use(express.json());
 
-app.get("/line", (req, res) => {
-  res.send({ msg: "King of the world" });
+app.get("/users", async (req, res) => {
+  const users = await UserModel.find({});
+  res.send(users);
 });
 
 const authFunction = async (user, res) => {
-  console.log(user);
   return res.status(200).send({
     msg: "LOGIN SUCCESS",
     auth: true,
@@ -90,7 +90,7 @@ app.post("/signin", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { name, email, pass } = req.body;
+  const { name, email, pass, age } = req.body;
 
   try {
     const eUser = await UserModel.findOne({ email });
@@ -102,7 +102,7 @@ app.post("/signup", async (req, res) => {
       name,
       email,
       pass: hash,
-      score: [],
+      age,
     });
     await user.save();
 
@@ -111,24 +111,5 @@ app.post("/signup", async (req, res) => {
     return res.status(500).send({ error: "An error occurred during signup" });
   }
 });
-app.patch("/score/:id", async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const scoreToAdd = req.body.score;
-    const user = await UserModel.find({ _id: userId });
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    user[0].scores.push(scoreToAdd);
-
-    await user[0].save();
-    console.log(user);
-    return res.status(200).json({ message: "Score added successfully" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-});
 module.exports = app;

@@ -3,6 +3,7 @@ const UserSchema = new Schema({
   email: { type: String, unique: true },
   pass: String,
   name: String,
+  age: Number,
   loginAttempts: {
     type: Number,
     required: true,
@@ -17,10 +18,6 @@ const UserSchema = new Schema({
     type: Boolean,
     require: true,
     default: false,
-  },
-  scores: {
-    type: [Number],
-    default: [],
   },
 });
 const UserModel = model("user", UserSchema);
