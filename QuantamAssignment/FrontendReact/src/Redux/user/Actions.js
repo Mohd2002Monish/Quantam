@@ -14,7 +14,7 @@ export const login = (user) => async (dispatch) => {
       type: LOGIN_LOADING,
     });
     const { data } = await axios.post(
-      "https://emitrrbackend.onrender.com/signin",
+      "https://quantam.onrender.com/signin",
       user
     );
 
@@ -36,7 +36,7 @@ export const signup = (user) => async (dispatch) => {
       type: SIGNUP_LOADING,
     });
     const { data } = await axios.post(
-      "https://emitrrbackend.onrender.com/signup",
+      "https://quantam.onrender.com/signup",
       user
     );
 

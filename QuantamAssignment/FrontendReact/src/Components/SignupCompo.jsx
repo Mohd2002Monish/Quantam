@@ -69,7 +69,7 @@ export default function SignupCompo() {
               <Box>
                 <FormControl id="lastName">
                   <FormLabel>Age</FormLabel>
-                  <Input name="age" type="number" />
+                  <Input onChange={handleChange} name="age" type="number" />
                 </FormControl>
               </Box>
             </HStack>

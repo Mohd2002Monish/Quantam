@@ -1,5 +1,5 @@
-import React from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Table,
   Thead,
@@ -8,30 +8,57 @@ import {
   Th,
   Td,
   TableCaption,
-  chakra,
+  Heading,
 } from "@chakra-ui/react";
 
-function HomeComponent({ data }) {
+function HomeComponent() {
+  const [data, setData] = useState([]);
+  function fetchData() {
+    return axios
+      .get("https://quantam.onrender.com/users")
+      .then((response) => {
+        console.log(response);
+        console.log("Data:", response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        throw error;
+      });
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
-    <Table variant="simple">
-      <TableCaption>Users</TableCaption>
-      <Thead>
-        <Tr>
-          {Object.keys(data[0]).map((key) => (
-            <Th key={key}>{key}</Th>
-          ))}
-        </Tr>
-      </Thead>
-      <Tbody>
-        {data.map((row, index) => (
-          <Tr key={index}>
-            {Object.values(row).map((value, index) => (
-              <Td key={index}>{value}</Td>
-            ))}
+    <>
+      <center>
+        <Heading>Users</Heading>
+      </center>
+      <Table variant="simple">
+        <Thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Age</Th>
+            <Th>Email</Th>
+            <Th>Id</Th>
           </Tr>
-        ))}
-      </Tbody>
-    </Table>
+        </Thead>
+        <Tbody>
+          {data.map((row, index) => (
+            <Tr key={index}>
+              {
+                <>
+                  <Th>{row.name}</Th>
+                  <Th>{row.age}</Th>
+                  <Th>{row.email}</Th>
+                  <Th>{row.name}</Th>
+                </>
+              }
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </>
   );
 }
 

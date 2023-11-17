@@ -22,7 +22,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../Redux/user/Actions";
 export default function LoginCompo() {
   const [showPassword, setShowPassword] = useState(false);
-  const { loading, error, auth, message } = useSelector((store) => {
+  const { loading, message } = useSelector((store) => {
     return store.auth;
   });
 
